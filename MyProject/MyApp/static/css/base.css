@@ -1,0 +1,42 @@
+/* Palette */
+:root {
+    --imperial-red: #E63946;
+    --honeydew: #F1FAEE;
+    --powder-blue: #A8DADC;
+    --celadon-blue: #457B9D;
+    --prussian-blue: #1D3557;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--honeydew);
+    color: var(--prussian-blue);
+}
+
+.navbar {
+    background-color: var(--celadon-blue);
+}
+
+.navbar-brand, .nav-link {
+    color: var(--honeydew) !important;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.btn-primary {
+    background-color: var(--imperial-red);
+    border-color: var(--imperial-red);
+}
+
+.btn-primary:hover {
+    background-color: var(--powder-blue);
+    border-color: var(--powder-blue);
+}
+
+.card {
+    border: none;
+    background-color: var(--honeydew);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

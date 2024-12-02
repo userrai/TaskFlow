@@ -1,0 +1,68 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #F1FAEE; /* Honeydew */
+}
+
+.card {
+    border-radius: 12px;
+    border: none;
+}
+
+.card-header {
+    background-color: #1D3557; /* Prussian Blue */
+    color: white;
+    padding: 1rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card-body {
+    background-color: #fff;
+    padding: 2rem;
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+img {
+    border: 5px solid #A8DADC; /* Powder Blue border around profile image */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.btn:hover {
+    background-color: #1D3557; /* Prussian Blue */
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Buttons' specific background */
+a[href*="profile_edit"] {
+    background-color: #457B9D; /* Celadon Blue */
+}
+
+a[href*="change_password"] {
+    background-color: #A8DADC; /* Powder Blue */
+}
+
+a[href*="delete_account"] {
+    background-color: #E63946; /* Imperial Red */
+}

@@ -1,0 +1,77 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #F1FAEE; /* Honeydew */
+}
+
+h1, h3 {
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #457B9D;
+    color: white;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #F8F9FA; /* Light gray hover effect */
+}
+
+.table thead {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.btn-success {
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: #A8DADC;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #457B9D;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #1D3557;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #457B9D;
+}
+
+.btn-danger {
+    background-color: #E63946;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-danger:hover {
+    background-color: #D32F2F;
+}
+
+.badge {
+    font-size: 0.85rem;
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+/* Form Labels */
+.form-label {
+    color: #1D3557;
+}
+
+/* Form Fields */
+.form-control {
+    border: 1px solid #457B9D;
+    padding: 10px;
+    font-size: 16px;
+}

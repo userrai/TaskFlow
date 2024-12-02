@@ -1,0 +1,78 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #F1FAEE;
+}
+
+.navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.table {
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #F8F9FA;
+}
+
+.badge {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    width: 250px;
+    height: 100vh;
+    background-color: #1D3557;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #457B9D;
+}
+
+/* Profile dropdown */
+.dropdown-menu {
+    min-width: 200px;
+
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.profile-picture {
+    border: 3px solid #457B9D; /* Sky Blue border */
+    padding: 3px;
+}
+.profile-picture:hover {
+    background-color: #1D3557;
+}
+
