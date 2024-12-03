@@ -108,7 +108,7 @@ TaskFlow is a collaborative project management web application designed to strea
    cd TaskFlow
    pip install -r requirements.txt
    python manage.py migrate
-   Access the application at http://127.0.0.1:8000
+   Access the application at http://127.0.0.1:8000/login
 ```
 
 ## Contributing
