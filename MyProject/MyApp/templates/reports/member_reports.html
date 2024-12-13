@@ -35,7 +35,7 @@
                         <td>{{ task.name }}</td>
                         <td>{{ task.description }}</td>
                         <td>{{ task.get_status_display }}</td>
-                        <td>{{ task.due_date }}</td>
+                        <td>{{ task.due_date|date:"M d, Y" }}</td>
                         <td>{{ task.progress }}%</td>
                     </tr>
                     {% endfor %}
@@ -48,7 +48,7 @@
             </table>
 
             <!-- Gantt Chart Section -->
-            <div class="gantt-container">
+            <div class="gantt-container" {% if not tasks %}style="display:none;"{% endif %}>
                 <h2>Progress Tracker (Gantt Chart)</h2>
                 <div class="gantt-chart">
                     <canvas id="ganttChart" width="1000" height="400"></canvas>
@@ -186,26 +186,42 @@
             ganttChart = createGanttChart(tasks); 
         }
     
-        updateGanttChart();
-    
+        if (tasks.length > 0) {
+            updateGanttChart();
+        }
+
         document.getElementById('generateReportButton').addEventListener('click', function () {
-            // Generate CSV for task data
-            const table = document.querySelector('.tasks-table');
-            let csvContent = "Task,Description,Status,Due Date,Progress\n";
+            // Define CSV headers
+            let csvContent = "Project,Task,Description,Status,Due Date,Progress\n";
 
-            const rows = table.querySelectorAll('tbody tr');
+            // Get table rows
+            const rows = document.querySelectorAll('.tasks-table tbody tr');
+
+            // Process each row
             rows.forEach(row => {
-                const columns = row.querySelectorAll('td');
-                const rowData = Array.from(columns).map(col => col.innerText).join(',');
-                csvContent += rowData + "\n";
-            });
+            const columns = row.querySelectorAll('td');
 
-            const linkCsv = document.createElement('a');
-            const blobCsv = new Blob([csvContent], { type: 'text/csv' });
+        if (columns.length > 0) {
+            // Arrange data as Project, Task, Description, Status, Due Date, and Progress
+            const project = columns[0].innerText.trim();
+            const task = columns[1].innerText.trim();
+            const description = columns[2].innerText.trim();
+            const status = columns[3].innerText.trim();
+            const dueDate = columns[4].innerText.trim(); 
+            const progress = columns[5].innerText.trim();
+
+            // Add row to CSV
+            csvContent += `${project},${task},${description},${status},${dueDate},${progress}\n`;
+            }
+        });
+
+            // Create a Blob and trigger download for CSV
+            const blobCsv = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
             const urlCsv = URL.createObjectURL(blobCsv);
-            linkCsv.setAttribute('href', urlCsv);
-            linkCsv.setAttribute('download', 'project_summary_report.csv');
-            linkCsv.click();
+            link.setAttribute('href', urlCsv);
+            link.setAttribute('download', 'member_reports.csv');
+            link.click();
 
             // Generate JPEG for the Gantt chart
             const canvas = document.getElementById('ganttChart');

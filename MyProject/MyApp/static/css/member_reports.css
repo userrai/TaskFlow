@@ -5,13 +5,16 @@
     --celadon-blue: #457B9D;
     --prussian-blue: #1D3557;
     --hover-blue: #DFF6F3;
+    --light-gray: #F8F9FA;
+    --medium-gray: #E5E5E5;
+    --dark-blue: #264653;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--honeydew);
+    background-color: var(--light-gray);
     color: var(--prussian-blue);
 }
 
@@ -20,125 +23,91 @@ header {
     color: white;
     padding: 1rem;
     text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
 }
 
 .container {
     max-width: 1200px;
     margin: 2rem auto;
-    padding: 1rem;
+    padding: 2rem;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    text-align: center;
     color: var(--imperial-red);
-}
-
-.tasks-table, .tasks-table th, .tasks-table td {
-    border: 1px solid var(--powder-blue);
-    border-collapse: collapse;
-}
-
-.tasks-table {
-    width: 100%;
+    text-align: center;
     margin-bottom: 2rem;
-}
-
-.tasks-table th, .tasks-table td {
-    padding: 0.75rem;
-    text-align: left;
-}
-
-.tasks-table th {
-    background-color: var(--celadon-blue);
-    color: white;
-}
-
-.tasks-table tbody tr:hover {
-    background-color: var(--hover-blue);
+    font-size: 2rem;
 }
 
 .back-btn {
     display: inline-block;
-    padding: 0.75rem 1.5rem;
-    margin-bottom: 1rem;
-    background-color: var(--imperial-red);
+    padding: 0.5rem 1rem;
     color: white;
-    text-decoration: none;
+    background-color: var(--celadon-blue);
     border-radius: 5px;
-    text-align: center;
+    text-decoration: none;
     font-weight: bold;
-    cursor: pointer;
+    margin-bottom: 1rem;
 }
 
 .back-btn:hover {
     background-color: var(--prussian-blue);
 }
 
+.tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    background-color: var(--light-gray);
+}
+
+.tasks-table th,
+.tasks-table td {
+    text-align: left;
+    padding: 0.8rem;
+    border: 1px solid var(--medium-gray);
+}
+
+.tasks-table th {
+    background-color: var(--prussian-blue);
+    color: white;
+    font-weight: bold;
+}
+
+.tasks-table tbody tr:hover {
+    background-color: var(--hover-blue);
+}
+
 .gantt-container {
     margin-top: 2rem;
     text-align: center;
+    background-color: var(--light-gray);
+    padding: 2rem;
+    border-radius: 10px;
 }
 
 .gantt-chart {
     margin: auto;
-    width: 90%;
-    height: 300px;
-}
-
-.pagination-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-    text-align: right;
-}
-
-.pagination-buttons button {
-    padding: 0.5rem 1rem;
-    margin-left: 0.5rem;
-    background-color: var(--celadon-blue);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.pagination-buttons button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.pagination-buttons button:hover:not(:disabled) {
-    background-color: var(--prussian-blue);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .generate-report-btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: var(--imperial-red);
+    background-color: var(--celadon-blue);
     color: white;
-    text-decoration: none;
+    border: none;
+    padding: 0.75rem 1.5rem;
     border-radius: 5px;
+    font-size: 1rem;
     font-weight: bold;
-    margin-top: 0.5rem;
     cursor: pointer;
 }
 
 .generate-report-btn:hover {
     background-color: var(--prussian-blue);
-}
-
-.gantt-chart {
-    margin: auto;
-    width: 100%;
-    max-width: 1200px;
-    height: 400px;
-}
-
-canvas {
-    display: block;
-    margin: auto;
 }

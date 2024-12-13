@@ -260,28 +260,41 @@ def leader_reports(request):
     if request.user.role != 'project_leader':
         return redirect('dashboard')  # Redirect non-leader users
 
-    projects = Project.objects.filter(members__user=request.user, members__role='project_manager')
+    # Fetch only projects where the user is a project leader
+    projects = Project.objects.filter(
+        members__user=request.user,
+        members__role='project_leader'
+    ).distinct()
 
+    # Paginate projects
     project_paginator = Paginator(projects, 10)
     project_page_number = request.GET.get('project_page', 1)
     project_page_obj = project_paginator.get_page(project_page_number)
 
-    tasks = Task.objects.filter(project__in=projects)
+    # Fetch all tasks related to these projects
+    tasks = Task.objects.filter(project__in=projects).select_related('assigned_to')
 
+    # Paginate tasks
     task_paginator = Paginator(tasks, 10)
     task_page_number = request.GET.get('task_page', 1)
     task_page_obj = task_paginator.get_page(task_page_number)
 
-    members = ProjectMember.objects.filter(project__in=projects)
+    # Fetch all members of these projects
+    members = ProjectMember.objects.filter(project__in=projects).select_related('user')
 
+    # Paginate members
     member_paginator = Paginator(members, 10)
     member_page_number = request.GET.get('member_page', 1)
     member_page_obj = member_paginator.get_page(member_page_number)
+
+    # Pass all tasks (not paginated) for the Gantt chart
+    all_tasks = Task.objects.filter(project__in=projects)
 
     return render(request, 'reports/leader_reports.html', {
         'projects': project_page_obj,
         'tasks': task_page_obj,
         'members': member_page_obj,
+        'all_tasks': all_tasks,
     })
 
 def generate_csv_report(request):
@@ -296,7 +309,7 @@ def generate_csv_report(request):
     writer.writerow(['Project Name', 'Description', 'Status', 'Progress (%)'])
 
     for project in projects:
-        # Make sure progress is a valid value
+        # Ensure progress is a valid value
         status = 'Completed' if project.progress == 100 else 'In Progress'
         writer.writerow([project.name, project.description, status, project.progress])
 
@@ -325,25 +338,40 @@ def generate_project_summary_report(request, project_id):
 
     writer = csv.writer(response)
 
+    # Write project summary headers
     writer.writerow(['Project Name', project.name])
     writer.writerow(['Description', project.description])
-    writer.writerow([])
+    writer.writerow(['Due Date', project.due_date])
+    writer.writerow(['Progress (%)', project.progress])
+    writer.writerow([])  # Empty row for separation
 
+    # Write task details headers
     writer.writerow(
-        ['Task ID', 'Task Name', 'Status', 'Assigned To', 'Start Date', 'Due Date', 'Completion Date', 'Priority',
-         'Progress', 'Notes'])
+        ['Task ID', 'Task Name', 'Status', 'Assigned To', 'Start Date', 'Due Date', 'Completion Date', 'Priority', 'Progress', 'Notes']
+    )
 
+    # Write task details
     for task in tasks:
+        # Handle task completion date and priority
+        completion_date = task.updated_at if task.status == 'completed' else 'N/A'
+        priority = 'High' if task.progress > 50 else 'Low'  # Example priority based on progress
+        notes = f"{task.description[:50]}..."  # Display first 50 characters of description as notes
+
         writer.writerow([
             task.id,
             task.name,
             task.status,
             task.assigned_to.username if task.assigned_to else 'N/A',
+            task.created_at,
             task.due_date,
+            completion_date,
+            priority,
             f"{task.progress:.2f}%",
+            notes
         ])
 
     return response
+
 
 @login_required
 def project_tasks_data(request, project_id):

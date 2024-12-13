@@ -32,6 +32,11 @@ class Project(models.Model):
         completed_tasks = self.tasks.filter(status='completed').count()
         return (completed_tasks / total_tasks) * 100
 
+    def save(self, *args, **kwargs):
+        """Automatically update project progress before saving."""
+        self.progress = self.calculate_progress()
+        super().save(*args, **kwargs)
+
     def get_task_summary(self):
         """Return task details for a summary report."""
         tasks = self.tasks.all()
@@ -54,9 +59,10 @@ ROLE_CHOICES = [
 class ProjectMember(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='members')
+    due_date = models.DateField(null=True, blank=True)  # Added due date
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='team_member')
     joined_at = models.DateTimeField(auto_now_add=True)
-    progress = models.FloatField(default=0)  # Member's progress in percentage for the project
+    progress = models.FloatField(default=0)  # Project progress in percentage
 
     def __str__(self):
         return f"{self.user.username} in {self.project.name}"
@@ -94,3 +100,14 @@ class Task(models.Model):
     def get_user_tasks(user):
         """Retrieve all tasks assigned to a specific user."""
         return Task.objects.filter(assigned_to=user)
+
+    def save(self, *args, **kwargs):
+        """Ensure the parent project’s progress is updated when a task is saved."""
+        super().save(*args, **kwargs)
+        if self.project:
+            self.project.save()  # Update the project's progress whenever a task is saved
+
+    def update_task_status(self, status):
+        """Update the status of the task and ensure the project's progress is recalculated."""
+        self.status = status
+        self.save()  # This will automatically update the project progress due to the overridden save method in Task
